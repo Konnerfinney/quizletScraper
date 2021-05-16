@@ -23,7 +23,8 @@ def get_text_from_file(file_name, write_file, check_list):
         qList = splitList[1].split("</span>")
         qaList.append(qList[0].replace('<br/>','\n'))
         qList = splitList[2].split("</span>")
-        qaList.append("ANSWER: " + qList[0])
+        aList = qList[0].replace('<br/>','\n')
+        qaList.append("ANSWER: " + aList)
         temp_str = ""
 
         # creates string w/ q/a and checks for duplicates
