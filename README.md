@@ -1,10 +1,17 @@
 # quizletScraper
-Takes html file and scrapes it to get questions and answers for study bank
+Takes in a text file containing questions and grabs quizlet pages relevant to the question.
 
-Requires bs4 library
+Create a text file with a list of questions seperated by a single new line
+Example:
 
-1. To use this script download quizlet pages as .html files
-2. Put all files in a new folder
-3. Run the script and select the folder
+Question 1
 
-After this a .txt file should appear within the folder with all the questions and answers
+Question 2
+
+Question 3
+
+Question 4
+
+Once you have saved this file, run the exectuable and then when prompted select the textfile containing the questions. 
+
+You will then have a file containing the quizlet's scraped questions and answers
