@@ -2,64 +2,47 @@ from bs4 import BeautifulSoup
 import tkinter as tk
 from tkinter import filedialog
 import glob
+from gsearch import search_google
 
 
+def get_text_from_file(write_file, read_file):
+	content = read_file.read()
+	content_list = content.split("\n\n")
+	curr_list = list()
 
-
-# function will get questions and answers from the file, write it to answers.txt
-# and return list of questions written to check for duplicates
-def get_text_from_file(file_name, write_file, check_list):
-    # opens file to read html from
-    f = open(file_name, 'r', encoding='utf-8')
-    document= BeautifulSoup(f.read())
-
-    # gets divs containing question/answers
-    table = document.find_all('div', attrs = {'class':'SetPageTerms-term'})  
-
-    # loops through all divs containing q/a
-    for row in table:
-        qaList = []
-        splitList = str(row).split('<span class="TermText notranslate lang-en">')
-        qList = splitList[1].split("</span>")
-        qaList.append(qList[0].replace('<br/>','\n'))
-        qList = splitList[2].split("</span>")
-        aList = qList[0].replace('<br/>','\n')
-        qaList.append("ANSWER: " + aList)
-        temp_str = ""
-
-        # creates string w/ q/a and checks for duplicates
-        for i in qaList:
-            temp_str = temp_str + i + "\n" 
-        if (temp_str not in check_list):
-            write_file.write(temp_str)
-            check_list.append(temp_str) 
-                
-    # return list for duplicate checking
-    return check_list
+	for question in content_list:
+		string = question.split("\n")[0]
+		curr_list = curr_list + search_google(string,write_file, curr_list)
+	write_file.close()
+	read_file.close()
 
 # main function to get directory, start calling other functions
 if __name__ ==  "__main__":
-    print("Starting script")
-    root = tk.Tk()
-    root.withdraw()
+	print("Starting script")
+	root = tk.Tk()
+	root.withdraw()
 
     # open filepath dialog to get dir
-    dir_path = filedialog.askdirectory()
+	file_path = filedialog.askopenfilename()
 
-    # gets all files within dir
-    file_list = glob.glob(dir_path + "/*")
+	print("opening file {}".format(file_path))
+    
+    # gets the file dir by editing abs file path
+	file_list = file_path.split("/")
+	file_list.pop()
+	file_dir = "/".join(file_list) + "/"
 
-    # creates url for answers.txt
-    answerURL = dir_path + "/answers.txt"
+    # opens file w/ questions
+	file1 = open(file_path,"r")
 
-    # opens or creates file
-    write_file = open(answerURL,"a")
-    list_of_questions = []
+    #opens file to write to 
+	file2 = open(file_dir + "answers.txt","a")
 
-    # loops through all files in dir
-    for read_file in file_list:
-        temp_list = []
-        temp_list = get_text_from_file(read_file, write_file, list_of_questions)
-        list_of_questions.append(temp_list)
+ 
+	get_text_from_file(file2, file1)
 
+
+
+
+	
     
