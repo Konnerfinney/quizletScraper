@@ -14,13 +14,6 @@ def search_google(question_text, write_file, curr_list):
             for i, (question, answer) in enumerate(zip(soup.select('a.SetPageTerm-wordText'), soup.select('a.SetPageTerm-definitionText')), 1):
                 string = ""
                 string = string +"\n"+ ('QUESTION {}'.format(counter)) + "\n\n" + (question.get_text(strip=True, separator='\n')) + "\n\n" + ('ANSWER:') + "\n"+ answer.get_text(strip=True, separator='\n') +"\n" + ('-' * 160)
-                # print('QUESTION {}'.format(counter))
-                # print()
-                # print(question.get_text(strip=True, separator='\n'))
-                # print()
-                # print('ANSWER:')
-                # print(answer.get_text(strip=True, separator='\n'))
-                # print('-' * 160)
                 counter += 1
                 try:
                     write_file.write(string)
