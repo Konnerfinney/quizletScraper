@@ -8,6 +8,16 @@ import webbrowser
 
 
 def get_text_from_file(write_file, read_file) -> None:
+	'''
+    Gets the questions to the text file and writes the scraped content into the final file
+
+            Parameters:
+                    write_file (file): the final file to be written to
+                    read_file (file): the file containing the question prompts
+
+            Returns:
+                    None
+    '''
 	content = read_file.read()
 	content_list = content.split("\n\n")
 	curr_list = list()
@@ -21,6 +31,14 @@ def get_text_from_file(write_file, read_file) -> None:
 
 # main function to get directory, start calling other functions
 def run() -> None:
+	'''
+		Gets the file from a tkinter directory pop up and creates the final write file before passing it off to other functions
+
+            Parameters:
+                    None
+            Returns:
+                    None
+    '''
 	print("Starting script")
 	root = tk.Tk()
 	root.withdraw()
